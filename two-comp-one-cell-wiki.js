@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', _ => {
     })
 
     city.addEventListener("change", event => {
-      event.detail.value = JSON.stringify({ ...JSON.parse(rowData.address), country: country.value});
+      event.detail.value = JSON.stringify({ ...JSON.parse(rowData.address), city: city.value});
     });
 
     wrapEl.append(country, city);
