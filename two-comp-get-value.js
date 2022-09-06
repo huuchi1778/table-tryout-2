@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', _ => {
 
   const columns = [
     {
-      headerName: 'Address',
+      title: 'Address',
       field: 'address',
       render: renderDropdowns
     },
