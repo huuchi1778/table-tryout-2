@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', _ => {
       { label: 'Ho Chi Minh', value: 'hochiminh' }
     ]
   };
-  const renderDropdowns = (cellData) => {
+  const renderDropdowns = (cellData, rowData) => {
     const wrapEl = document.createElement('div');
     const data = cellData ? JSON.parse(cellData) : {"country":"","city":""};
     const country = new Kuc.Dropdown({
@@ -25,10 +25,15 @@ window.addEventListener('DOMContentLoaded', _ => {
       value: data.city
     });
 
-    country.addEventListener("change", e => {
-      city.items = relatedData[e.detail.value]
-      city.value = data.city;
+    country.addEventListener("change", event => {
+      city.items = relatedData[event.detail.value];
+      city.value = "";
+      event.detail.value = JSON.stringify({ ...JSON.parse(rowData.address), country: country.value});
     })
+
+    city.addEventListener("change", event => {
+      event.detail.value = JSON.stringify({ ...JSON.parse(rowData.address), country: country.value});
+    });
 
     wrapEl.append(country, city);
     return wrapEl;
@@ -60,11 +65,12 @@ window.addEventListener('DOMContentLoaded', _ => {
 
   table.addEventListener('change', event => {
     const changedDetail = event.detail;
-    console.log('TWO DROPDOWNS IN ONE CELL')
+    console.log('TWO DROPDOWNS IN ONE CELL');
+    console.log('Following Wiki way');
     console.log('Old data: ', changedDetail.oldData[changedDetail.rowIndex]);
     console.log('Current data: ', changedDetail.data[changedDetail.rowIndex]);
     handleCellChange(changedDetail);
   });
 
-  document.querySelector('#two-components-one-cell').appendChild(table);
+  document.querySelector('#two-comp-wiki').appendChild(table);
 });
